@@ -30,3 +30,21 @@ tasks.getByName<Test>("test") {
     useJUnitPlatform()
 }
 
+gradlePlugin {
+    plugins {
+        create("") { // One entry per plugin
+            project.logger.warn("${project.group} - ${project.name}")
+            id = "${project.group}.${project.name}"
+            displayName = "Python Testing Plugin"
+            description = "Plugin that allow to automate Python testing on a project"
+            implementationClass = "PyTestPlugin"
+        }
+    }
+}
+
+pluginBundle { // These settings are set for the whole plugin bundle
+    website = ""
+    vcsUrl = ""
+    tags = listOf("python", "test", "coverage", "buildpython")
+}
+
