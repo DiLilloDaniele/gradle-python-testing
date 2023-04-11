@@ -38,10 +38,10 @@ gradlePlugin {
             id = "${project.group}.${project.name}"
             displayName = "Python Testing Plugin"
             description = "Plugin developed aiming at the automation " +
-                    "of the testing process in a Python project. This plugin includes " +
-                    "the possibility to specify the src and test folders of the project " +
-                    "and perform tests and coverage using all the Python libraries (unittest and coverage modules)." +
-                    " It is also supported to use Phython virtual environments."
+                "of the testing process in a Python project. This plugin includes " +
+                "the possibility to specify the src and test folders of the project " +
+                "and perform tests and coverage using all the Python libraries (unittest and coverage modules)." +
+                " It is also supported to use Phython virtual environments."
             implementationClass = "io.github.dilillodaniele.gradle.testpy.PyTestPlugin"
         }
     }
@@ -97,7 +97,6 @@ val sourceJar by tasks.registering(Jar::class) {
 
 publishing {
     repositories {
-        mavenLocal()
         maven {
             url = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
             // Pass the pwd via -PmavenCentralPwd='yourPassword'
@@ -135,5 +134,18 @@ publishing {
             }
             signing { sign(pyTest) }
         }
+    }
+}
+
+if (System.getenv("CI") == "true") {
+    signing {
+        val signingKey: String? by project
+        val signingPassword: String? by project
+        useInMemoryPgpKeys(signingKey, signingPassword)
+    }
+} else {
+    signing {
+        useGpgCmd()
+        sign(configurations.archives.get())
     }
 }
