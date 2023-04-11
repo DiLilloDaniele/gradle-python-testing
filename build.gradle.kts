@@ -13,6 +13,7 @@ group = "org.danieledilillo"
 
 repositories {
     mavenCentral()
+    mavenLocal()
 }
 
 dependencies {
@@ -36,8 +37,12 @@ gradlePlugin {
             project.logger.warn("${project.group} - ${project.name}")
             id = "${project.group}.${project.name}"
             displayName = "Python Testing Plugin"
-            description = "Plugin that allow to automate Python testing on a project"
-            implementationClass = "PyTestPlugin"
+            description = "Plugin developed aiming at the automation " +
+                    "of the testing process in a Python project. This plugin includes " +
+                    "the possibility to specify the src and test folders of the project " +
+                    "and perform tests and coverage using all the Python libraries (unittest and coverage modules)." +
+                    " It is also supported to use Phython virtual environments."
+            implementationClass = "io.github.dilillodaniele.gradle.testpy.PyTestPlugin"
         }
     }
 }
@@ -88,4 +93,47 @@ val javadocJar by tasks.registering(Jar::class) {
 val sourceJar by tasks.registering(Jar::class) {
     from(sourceSets.named("main").get().allSource)
     archiveClassifier.set("sources")
+}
+
+publishing {
+    repositories {
+        mavenLocal()
+        maven {
+            url = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
+            // Pass the pwd via -PmavenCentralPwd='yourPassword'
+            val mavenCentralPwd: String? by project
+            credentials {
+                username = "danidilo99"
+                password = mavenCentralPwd
+            }
+        }
+        publications {
+            val pyTest by creating(MavenPublication::class) {
+                from(components["java"])
+                // If the gradle-publish-plugins plugin is applied, these are pre-configured
+                // artifact(javadocJar)
+                // artifact(sourceJar)
+                pom {
+                    name.set("Greetings plugin")
+                    description.set("A test plugin")
+                    url.set("???")
+                    licenses {
+                        license {
+                            name.set("MIT")
+                        }
+                    }
+                    developers {
+                        developer {
+                            name.set("Daniele Di Lillo")
+                        }
+                    }
+                    scm {
+                        url.set("git@github.com:DanySK/lss-deleted-soon.git")
+                        connection.set("git@github.com:DanySK/lss-deleted-soon.git")
+                    }
+                }
+            }
+            signing { sign(pyTest) }
+        }
+    }
 }
