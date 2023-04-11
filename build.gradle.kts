@@ -48,3 +48,36 @@ pluginBundle { // These settings are set for the whole plugin bundle
     tags = listOf("python", "test", "coverage", "buildpython")
 }
 
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(8))
+    }
+}
+
+tasks.test {
+    javaLauncher.set(
+        javaToolchains.launcherFor {
+            languageVersion.set(JavaLanguageVersion.of(8))
+        }
+    )
+}
+
+val testWithJVM18 by tasks.registering(Test::class) { // Also works with JavaExec
+    javaLauncher.set(
+        javaToolchains.launcherFor {
+            languageVersion.set(JavaLanguageVersion.of(18))
+        }
+    )
+}
+// You can pick JVM's not yet supported by Gradle!
+tasks.check {
+    dependsOn(testWithJVM18)
+}
+
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+    kotlinOptions {
+        allWarningsAsErrors = true
+    }
+}
+
+
