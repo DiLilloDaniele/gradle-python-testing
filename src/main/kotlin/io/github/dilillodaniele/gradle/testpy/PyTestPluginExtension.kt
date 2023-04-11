@@ -9,7 +9,7 @@ import org.gradle.api.provider.Property
  * exists, try finding covegare bin and use it.
  * Otherwise if [coverageAutoInstall] true install it globally, else if false throw error
  */
-open class PyTestPluginExtension  @JvmOverloads constructor(
+open class PyTestPluginExtension @JvmOverloads constructor(
     private val project: Project,
     val testSrc: Property<String> = project.propertyWithDefault("src"),
     val coverageAutoInstall: Property<Boolean> = project.propertyWithDefault(true),
@@ -25,5 +25,4 @@ open class PyTestPluginExtension  @JvmOverloads constructor(
         private inline fun <reified T> Project.propertyWithDefault(default: T): Property<T> =
             objects.property(T::class.java).apply { convention(default) }
     }
-
 }
