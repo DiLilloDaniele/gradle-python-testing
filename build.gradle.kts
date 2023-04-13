@@ -42,7 +42,7 @@ gradlePlugin {
                 "the possibility to specify the src and test folders of the project " +
                 "and perform tests and coverage using all the Python libraries (unittest and coverage modules)." +
                 " It is also supported to use Phython virtual environments."
-            implementationClass = "io.github.dilillodaniele.gradle.testpy.PyTestPlugin"
+            implementationClass = "io.github.dilillodaniele.gradle.testpy.PyTest"
         }
     }
 }
@@ -94,7 +94,7 @@ val sourceJar by tasks.registering(Jar::class) {
     from(sourceSets.named("main").get().allSource)
     archiveClassifier.set("sources")
 }
-
+/*
 publishing {
     repositories {
         maven {
@@ -136,7 +136,8 @@ publishing {
         }
     }
 }
-
+*/
+/*
 if (System.getenv("CI") == "true") {
     signing {
         val signingKey: String? by project
@@ -149,3 +150,4 @@ if (System.getenv("CI") == "true") {
         sign(configurations.archives.get())
     }
 }
+*/
