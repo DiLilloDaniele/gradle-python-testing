@@ -31,7 +31,7 @@ class PluginTests : StringSpec(
 
         fun TemporaryFolder.file(name: String, content: () -> String) = newFile(name).writeText(content().trimIndent())
 
-        fun TemporaryFolder.runCommand(vararg command: String, wait: Long = 10) {
+        fun TemporaryFolder.runCommand(vararg command: String, wait: Long = 30) {
             val process = ProcessBuilder(*command)
                 .directory(root)
                 .redirectError(ProcessBuilder.Redirect.INHERIT)
