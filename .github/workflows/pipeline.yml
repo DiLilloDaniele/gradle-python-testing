@@ -20,9 +20,20 @@ jobs:
         - name: Run assemble gradle task
           run: ./gradlew assemble
 
-  test:
+  jvm-version:
+    runs-on: ubuntu-latest
     needs:
       - compile
+    outputs:
+      versions: ${{ steps.versions.outputs.list }}
+    steps:
+      - run: |
+          ruby -e 'puts "list=#{((16..19).to_a + [8, 11]).to_s}"' >> $GITHUB_OUTPUT
+        id: versions
+
+  test:
+    needs:
+      - jvm-version
     strategy:
       matrix:
         java: ${{ fromJson(needs.jvm-version.outputs.versions) }}
