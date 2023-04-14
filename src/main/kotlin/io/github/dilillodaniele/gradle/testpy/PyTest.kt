@@ -21,12 +21,12 @@ open class PyTest : Plugin<Project> {
                     .filter { !it.name.contains("__init__") }.map { it.name }
                 println(files.toList().toString())
 
-                var args = if(files.toList().size > 1)
-                    files.map { "${extension.testSrc.get()}/${it}" }.joinToString(separator = " ")
+                var args = if (files.toList().size > 1)
+                    files.map { "${extension.testSrc.get()}/$it" }.joinToString(separator = " ")
                 else
-                    files.map { "${extension.testSrc.get()}/${it}" }.toList().get(0)
+                    files.map { "${extension.testSrc.get()}/$it" }.toList().get(0)
                 var command: String = if (extension.useVirtualEnv.get())
-                    "${projectDir}/${extension.virtualEnvFolder.get()}/$osFolder/python -m unittest -v " + args
+                    "$projectDir/${extension.virtualEnvFolder.get()}/$osFolder/python -m unittest -v " + args
                 else
                     "python -m unittest -v $args"
 
@@ -37,7 +37,6 @@ open class PyTest : Plugin<Project> {
                     project.logger.warn(result)
                 }
             }
-
         }
     }
 
@@ -63,8 +62,7 @@ open class PyTest : Plugin<Project> {
             }
         }
 
-        val osFolder = when (getOS())
-        {
+        val osFolder = when (getOS()) {
             OS.WINDOWS -> "Scripts"
             OS.LINUX -> "bin"
             OS.MAC -> "bin"

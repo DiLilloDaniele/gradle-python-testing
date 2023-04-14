@@ -1,15 +1,10 @@
 package io.github.dilillodaniele.gradle.testpy
 
-import io.github.dilillodaniele.gradle.testpy.PluginTests.Companion.runCommand
-import io.github.dilillodaniele.gradle.testpy.PluginTests.Companion.virtualEnvStartup
 import io.kotest.core.spec.style.StringSpec
 import org.apache.commons.io.FileUtils
 import org.gradle.internal.impldep.org.junit.rules.TemporaryFolder
 import org.gradle.testkit.runner.GradleRunner
 import java.io.File
-import java.nio.file.Files
-import java.nio.file.Path
-import java.nio.file.Paths
 import java.util.concurrent.TimeUnit
 
 class PluginTests : StringSpec(
@@ -61,7 +56,6 @@ class PluginTests : StringSpec(
         fun TemporaryFolder.virtualEnvStartup() {
             runCommand("python -m virtualenv $virtualEnvFolder")
             runCommand("mkdir src")
-
         }
 
         fun TemporaryFolder.runGradle(
