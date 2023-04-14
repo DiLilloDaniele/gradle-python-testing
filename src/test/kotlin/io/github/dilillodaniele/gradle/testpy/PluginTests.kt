@@ -54,7 +54,7 @@ class PluginTests : StringSpec(
         }
 
         fun TemporaryFolder.virtualEnvStartup() {
-            runCommand("python -m virtualenv $virtualEnvFolder")
+            runCommand("python -m venv $virtualEnvFolder")
             runCommand("mkdir src")
         }
 
