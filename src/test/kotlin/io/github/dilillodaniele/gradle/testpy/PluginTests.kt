@@ -14,7 +14,7 @@ class PluginTests : StringSpec(
             val file = File(PluginTests::class.java.getResource("/python").toURI())
             project.virtualEnvStartup()
             project.moveFolder(file)
-            val result = project.runGradle("detailedTest")
+            val result = project.runGradle("detailedTest", "--stacktrace")
             println(result)
             assert(result.contains("OK"))
         }
