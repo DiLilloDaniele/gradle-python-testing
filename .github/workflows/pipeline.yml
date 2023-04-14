@@ -20,8 +20,6 @@ jobs:
         - name: Run assemble gradle task
           run: ./gradlew assemble
 
-
-
   test:
     needs:
       - compile
