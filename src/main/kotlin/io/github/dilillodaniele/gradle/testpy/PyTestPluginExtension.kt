@@ -11,13 +11,12 @@ import org.gradle.api.provider.Property
  */
 open class PyTestPluginExtension @JvmOverloads constructor(
     private val project: Project,
-    val testSrc: Property<String> = project.propertyWithDefault("src"),
+    val testSrc: Property<String> = project.propertyWithDefault("src/test"),
     val coverageAutoInstall: Property<Boolean> = project.propertyWithDefault(true),
     val virtualEnvFolder: Property<String> = project.propertyWithDefault(project.path),
     val minCoveragePercValue: Property<Int> = project.propertyWithDefault(50),
     val useVirtualEnv: Property<Boolean> = project.propertyWithDefault(false)
 ) {
-
     companion object {
 
         const val EXTENSION_NAME = "pytest_plugin"

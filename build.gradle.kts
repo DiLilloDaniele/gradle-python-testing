@@ -1,3 +1,5 @@
+import java.io.*
+
 plugins {
     `java-gradle-plugin`
     kotlin("jvm") version "1.5.31"
@@ -22,6 +24,7 @@ dependencies {
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
     implementation(gradleApi())
     implementation(gradleKotlinDsl())
+    implementation("commons-io:commons-io:2.11.0")
 
     testImplementation(gradleTestKit())
     testImplementation(libs.bundles.kotlin.testing)
@@ -94,6 +97,16 @@ val sourceJar by tasks.registering(Jar::class) {
     from(sourceSets.named("main").get().allSource)
     archiveClassifier.set("sources")
 }
+
+tasks.register<Exec>("installSshpass") {
+    commandLine("${projectDir}/tmp/env/Scripts/python -m unittest -v tmp/src/test/testCalculator.py ".split(" "))//where
+    standardOutput = ByteArrayOutputStream()
+    doLast {
+        val result = standardOutput.toString()
+        project.logger.warn(result)
+    }
+}
+
 /*
 publishing {
     repositories {
