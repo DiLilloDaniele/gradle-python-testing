@@ -44,6 +44,23 @@ open class PyTest : Plugin<Project> {
                     project.logger.warn(result)
                 }
             }
+
+            tasks.register<Exec>("installCoverageGlobally") {
+                commandLine("pip", "list")
+                standardOutput = ByteArrayOutputStream()
+                doLast {
+                    val result = standardOutput.toString()
+                    val installed = result.contains("coverage")
+                    project.logger.warn("coverage is installed: $installed")
+                    if(!installed && !extension.useVirtualEnv.get()) {
+                        val output = project.runCommand("python", "-m", "pip", "install", "coverage")
+                        project.logger.warn("$output")
+                        project.logger.warn("----------------------")
+                        project.logger.warn("Coverage installed correctly")
+                    }
+                }
+            }
+
         }
     }
 
@@ -87,5 +104,15 @@ open class PyTest : Plugin<Project> {
 
         private inline fun <reified T> Project.createExtension(name: String, vararg args: Any?): T =
             project.extensions.create(name, T::class.java, *args)
+
+        private fun Project.runCommand(vararg cmd: String) = projectDir.runCommandInFolder(*cmd)
+
+        private fun File.runCommandInFolder(vararg cmd: String) = Runtime.getRuntime()
+            .exec(cmd, emptyArray(), this)
+            .inputStream
+            .bufferedReader()
+            .readText()
+            .trim()
+            .takeIf { it.isNotEmpty() }
     }
 }
