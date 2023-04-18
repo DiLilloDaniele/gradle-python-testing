@@ -54,7 +54,7 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
       - name: Build with Gradle
-        run: ./gradlew test --stacktracegit
+        run: ./gradlew test --stacktrace
         id: run_tests
 
   success:
