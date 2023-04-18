@@ -68,6 +68,10 @@ tasks.test {
     )
 }
 
+tasks.test {
+    testLogging.showStandardStreams = true
+}
+
 val testWithJVM18 by tasks.registering(Test::class) { // Also works with JavaExec
     javaLauncher.set(
         javaToolchains.launcherFor {
