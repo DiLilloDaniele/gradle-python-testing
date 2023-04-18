@@ -57,7 +57,9 @@ jobs:
         run: ./gradlew test --stacktrace >> $GITHUB_OUTPUT
         id: run_tests
       - name: Print output
-        run: echo $GITHUB_OUTPUT
+        env:
+          SLACK_MESSAGE: ${{join(steps.run_tests.outputs.*, '\n')}}
+        run: echo $SLACK_MESSAGE
 
   success:
     runs-on: ubuntu-latest
