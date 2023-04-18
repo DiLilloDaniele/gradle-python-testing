@@ -8,7 +8,14 @@ import java.io.ByteArrayOutputStream
 import java.io.File
 import java.util.*
 
+/**
+ * Plugin class that performs tests on a Python project.
+ */
 open class PyTest : Plugin<Project> {
+
+    /**
+     * Constructor method for the open class.
+     */
     override fun apply(target: Project) {
         with(target) {
 
@@ -46,6 +53,9 @@ open class PyTest : Plugin<Project> {
             WINDOWS, LINUX, MAC
         }
 
+        /**
+         * Utility method that return the OS type of the executing machine.
+         */
         fun getOS(): OS? {
             val os = System.getProperty("os.name").lowercase(Locale.getDefault())
             return when {
@@ -62,27 +72,20 @@ open class PyTest : Plugin<Project> {
             }
         }
 
+        /**
+         * Utility method that returns the OS specific folder to create
+         * for a virtual environment.
+         */
         val osFolder = when (getOS()) {
             OS.WINDOWS -> "Scripts"
             OS.LINUX -> "bin"
             OS.MAC -> "bin"
             else -> {
-                println("Unknown Operating System")
-                throw IllegalStateException()
+                error("Unknown Operating System")
             }
         }
 
         private inline fun <reified T> Project.createExtension(name: String, vararg args: Any?): T =
             project.extensions.create(name, T::class.java, *args)
-
-        private fun Project.runCommand(vararg cmd: String) = projectDir.runCommandInFolder(*cmd)
-
-        private fun File.runCommandInFolder(vararg cmd: String) = Runtime.getRuntime()
-            .exec(cmd, emptyArray(), this)
-            .inputStream
-            .bufferedReader()
-            .readText()
-            .trim()
-            .takeIf { it.isNotEmpty() }
     }
 }

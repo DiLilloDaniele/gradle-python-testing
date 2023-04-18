@@ -21,8 +21,7 @@ class PluginTests : StringSpec(
     }
 ) {
     companion object {
-        val resourcePath: String = PluginTests::class.java.getResource("/python/main/calculator.py").path
-        val virtualEnvFolder: String = "env"
+        const val virtualEnvFolder: String = "env"
 
         fun folder(closure: TemporaryFolder.() -> Unit) = TemporaryFolder().apply {
             create()
