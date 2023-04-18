@@ -54,12 +54,8 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
       - name: Build with Gradle
-        run: ./gradlew test --stacktrace >> $GITHUB_OUTPUT
+        run: ./gradlew test --stacktracegit
         id: run_tests
-      - name: Print output
-        env:
-          SLACK_MESSAGE: ${{join(steps.run_tests.outputs.*, '\n')}}
-        run: echo $SLACK_MESSAGE
 
   success:
     runs-on: ubuntu-latest
