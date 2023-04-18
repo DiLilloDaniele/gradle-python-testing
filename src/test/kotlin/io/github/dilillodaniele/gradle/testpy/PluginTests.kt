@@ -42,7 +42,7 @@ class PluginTests : StringSpec(
                 require(process.exitValue() == 0) {
                     "command '${command.joinToString(" ")}' failed with exit value ${process.exitValue()}"
                 }
-            } catch (ex: Exception) {
+            } catch (ex: IllegalThreadStateException) {
                 println("$command")
                 println("$ex - ${ex.message}")
             }
@@ -91,10 +91,6 @@ class PluginTests : StringSpec(
                
                 """.trimIndent()
             }
-            /*
-
-
-             */
             otherChecks()
         }
     }
