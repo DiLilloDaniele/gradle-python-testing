@@ -20,6 +20,7 @@ open class PyTest : Plugin<Project> {
         with(target) {
 
             val extension = project.createExtension<PyTestPluginExtension>("pytest", target)
+            val pythonFolder = { "$projectDir/${extension.virtualEnvFolder.get()}/$osFolder" }
 
             tasks.register<Exec>("detailedTest") {
                 val projectPath = target.projectDir.toString().replace("\\", "/")
@@ -33,7 +34,7 @@ open class PyTest : Plugin<Project> {
                 else
                     files.map { "${extension.testSrc.get()}/$it" }.toList().get(0)
                 var command: String = if (extension.useVirtualEnv.get())
-                    "$projectDir/${extension.virtualEnvFolder.get()}/$osFolder/python -m unittest -v " + args
+                    "${pythonFolder()}/python -m unittest -v $args"
                 else
                     "python -m unittest -v $args"
 
@@ -52,7 +53,7 @@ open class PyTest : Plugin<Project> {
                     val result = standardOutput.toString()
                     val installed = result.contains("coverage")
                     project.logger.warn("coverage is installed: $installed")
-                    if(!installed && !extension.useVirtualEnv.get()) {
+                    if (!installed && !extension.useVirtualEnv.get()) {
                         val output = project.runCommand("python", "-m", "pip", "install", "coverage")
                         project.logger.warn("$output")
                         project.logger.warn("----------------------")
@@ -61,6 +62,23 @@ open class PyTest : Plugin<Project> {
                 }
             }
 
+            tasks.register<Exec>("installCoverageOnVenv") {
+                if (!extension.useVirtualEnv.get())
+                    error("Malformed configuration for virtual environment: if use venv, set it on plugin config")
+                commandLine("$pythonFolder/pip", "list")
+                standardOutput = ByteArrayOutputStream()
+                doLast {
+                    val result = standardOutput.toString()
+                    val installed = result.contains("coverage")
+                    project.logger.warn("coverage is installed: $installed")
+                    if (!installed && !extension.useVirtualEnv.get()) {
+                        val output = project.runCommand("$pythonFolder/python", "-m", "pip", "install", "coverage")
+                        project.logger.warn("$output")
+                        project.logger.warn("----------------------")
+                        project.logger.warn("Coverage installed correctly")
+                    }
+                }
+            }
         }
     }
 
