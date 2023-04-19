@@ -10,13 +10,24 @@ import java.util.concurrent.TimeUnit
 class PluginTests : StringSpec(
     {
         "the plugin task that performs detailed tests should work correctly" {
-            val project = configuredPlugin()
+            val project = configuredPlugin(
+                """
+                useVirtualEnv.set(true)
+                virtualEnvFolder.set("$virtualEnvFolder")
+                """.trimIndent()
+            )
             val file = File(PluginTests::class.java.getResource("/python").toURI())
             project.virtualEnvStartup()
             project.moveFolder(file)
             val result = project.runGradle("detailedTest", "--stacktrace")
             println(result)
             assert(result.contains("OK"))
+        }
+        "the plugin should correctly install coverage globally if venv's not used" {
+            val project = configuredPlugin()
+            val result = project.runGradle("installCoverageGlobally", "--stacktrace")
+            println(result)
+            assert(result.contains("installed"))
         }
     }
 ) {
@@ -71,7 +82,7 @@ class PluginTests : StringSpec(
             .build().output
 
         fun configuredPlugin(
-            // pluginConfiguration: String = "",
+            pluginConfiguration: String = "",
             otherChecks: TemporaryFolder.() -> Unit = {},
         ): TemporaryFolder = folder {
             file("settings.gradle") { "rootProject.name = 'testproject'" }
@@ -84,8 +95,7 @@ class PluginTests : StringSpec(
                
                 pytest {
                     testSrc.set("src/test")
-                    useVirtualEnv.set(true)
-                    virtualEnvFolder.set("$virtualEnvFolder")
+                    $pluginConfiguration
                 }
                
                 """.trimIndent()
