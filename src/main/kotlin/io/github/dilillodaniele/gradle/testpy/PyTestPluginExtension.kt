@@ -20,7 +20,7 @@ open class PyTestPluginExtension @JvmOverloads constructor(
     private val project: Project,
     val testSrc: Property<String> = project.propertyWithDefault("src/test"),
     val coverageAutoInstall: Property<Boolean> = project.propertyWithDefault(true),
-    val virtualEnvFolder: Property<String> = project.propertyWithDefault(project.path),
+    val virtualEnvFolder: Property<String> = project.propertyWithDefault(""),
     val minCoveragePercValue: Property<Int> = project.propertyWithDefault(DEFAULT_COVERAGE_PERC),
     val useVirtualEnv: Property<Boolean> = project.propertyWithDefault(false)
 ) {
