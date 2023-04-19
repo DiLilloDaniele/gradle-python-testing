@@ -54,10 +54,12 @@ open class PyTest : Plugin<Project> {
                     val installed = result.contains("coverage")
                     project.logger.warn("coverage is installed: $installed")
                     if (!installed && !extension.useVirtualEnv.get()) {
+                        /*
                         val output = project.runCommand("python", "-m", "pip", "install", "coverage")
                         project.logger.warn("$output")
                         project.logger.warn("----------------------")
                         project.logger.warn("Coverage installed correctly")
+                         */
                     }
                 }
             }
@@ -65,14 +67,14 @@ open class PyTest : Plugin<Project> {
             tasks.register<Exec>("installCoverageOnVenv") {
                 if (!extension.useVirtualEnv.get())
                     error("Malformed configuration for virtual environment: if use venv, set it on plugin config")
-                commandLine("$pythonFolder/pip", "list")
+                commandLine("${pythonFolder()}/pip", "list")
                 standardOutput = ByteArrayOutputStream()
                 doLast {
                     val result = standardOutput.toString()
                     val installed = result.contains("coverage")
                     project.logger.warn("coverage is installed: $installed")
                     if (!installed && !extension.useVirtualEnv.get()) {
-                        val output = project.runCommand("$pythonFolder/python", "-m", "pip", "install", "coverage")
+                        val output = project.runCommand("${pythonFolder()}/python", "-m", "pip", "install", "coverage")
                         project.logger.warn("$output")
                         project.logger.warn("----------------------")
                         project.logger.warn("Coverage installed correctly")
