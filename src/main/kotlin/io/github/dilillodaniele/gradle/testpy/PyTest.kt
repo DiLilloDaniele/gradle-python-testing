@@ -54,12 +54,10 @@ open class PyTest : Plugin<Project> {
                     val installed = result.contains("coverage")
                     project.logger.warn("coverage is installed: $installed")
                     if (!installed && !extension.useVirtualEnv.get()) {
-                        /*
                         val output = project.runCommand("python", "-m", "pip", "install", "coverage")
                         project.logger.warn("$output")
                         project.logger.warn("----------------------")
                         project.logger.warn("Coverage installed correctly")
-                         */
                     }
                 }
             }
