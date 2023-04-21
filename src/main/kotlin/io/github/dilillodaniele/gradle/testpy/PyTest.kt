@@ -2,6 +2,7 @@ package io.github.dilillodaniele.gradle.testpy
 
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.Task
 import org.gradle.api.tasks.Exec
 import org.gradle.kotlin.dsl.register
 import java.io.ByteArrayOutputStream
@@ -21,9 +22,9 @@ open class PyTest : Plugin<Project> {
 
             val extension = project.createExtension<PyTestPluginExtension>("pytest", target)
             val pythonFolder = { "$projectDir/${extension.virtualEnvFolder.get()}/$osFolder" }
+            val projectPath = target.projectDir.toString().replace("\\", "/")
 
             tasks.register<Exec>("detailedTest") {
-                val projectPath = target.projectDir.toString().replace("\\", "/")
                 val path = projectPath + "/" + extension.testSrc.get()
                 val files = File(path).walk().filter { it.extension == "py" }
                     .filter { !it.name.contains("__init__") }.map { it.name }
@@ -63,8 +64,6 @@ open class PyTest : Plugin<Project> {
             }
 
             tasks.register<Exec>("installCoverageOnVenv") {
-                if (!extension.useVirtualEnv.get())
-                    error("Malformed configuration for virtual environment: if use venv, set it on plugin config")
                 commandLine("${pythonFolder()}/pip", "list")
                 standardOutput = ByteArrayOutputStream()
                 doLast {
@@ -77,6 +76,28 @@ open class PyTest : Plugin<Project> {
                         project.logger.warn("----------------------")
                         project.logger.warn("Coverage installed correctly")
                     }
+                }
+            }
+
+            tasks.register<Task>("installCoverage") {
+                if (!extension.useVirtualEnv.get())
+                    dependsOn("installCoverageGlobally")
+                else
+                    dependsOn("installCoverageOnVenv")
+            }
+
+            tasks.register<Exec>("doCoverage") {
+                dependsOn("installCoverage")
+                val path = projectPath + "/" + extension.testSrc.get()
+                val command = if (extension.useVirtualEnv.get())
+                    "${pythonFolder()}/coverage run -m unittest discover -s $path"
+                else
+                    "coverage run -m unittest discover -s $path"
+                commandLine(command.split(" ").toList())
+                standardOutput = ByteArrayOutputStream()
+                doLast {
+                    val result = standardOutput.toString()
+                    project.logger.warn("the result value is: $result")
                 }
             }
         }
