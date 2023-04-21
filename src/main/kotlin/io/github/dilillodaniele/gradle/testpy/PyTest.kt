@@ -88,12 +88,13 @@ open class PyTest : Plugin<Project> {
 
             tasks.register<Exec>("doCoverage") {
                 dependsOn("installCoverage")
-                val path = projectPath + "/" + extension.testSrc.get()
-                project.logger.warn("Project path: $path")
+                project.logger.debug("Executing coverage")
+                val path = extension.testSrc.get()
+                project.logger.debug("Project path: $path")
                 val command = if (extension.useVirtualEnv.get())
                     "${pythonFolder()}/coverage run -m unittest discover -s $path"
                 else
-                    "coverage run -m unittest discover -s $path"
+                    "python -m coverage run -m unittest discover -s $path"
                 commandLine(command.split(" ").toList())
                 standardOutput = ByteArrayOutputStream()
                 doLast {

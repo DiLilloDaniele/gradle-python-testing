@@ -38,7 +38,7 @@ class PluginTests : StringSpec(
             )
             val file = File(PluginTests::class.java.getResource("/python").toURI())
             project.moveFolder(file)
-            val result = project.runGradle("doCoverage", "--stacktrace")
+            val result = project.runGradle("doCoverage", "--stacktrace", "--debug")
             println(result)
             println(project.root)
             assert(Files.exists(File("${project.root}/.coverage").toPath()))
