@@ -5,6 +5,7 @@ import org.apache.commons.io.FileUtils
 import org.gradle.internal.impldep.org.junit.rules.TemporaryFolder
 import org.gradle.testkit.runner.GradleRunner
 import java.io.File
+import java.nio.file.Files
 import java.util.concurrent.TimeUnit
 
 class PluginTests : StringSpec(
@@ -28,6 +29,19 @@ class PluginTests : StringSpec(
             val result = project.runGradle("installCoverageGlobally", "--stacktrace")
             println(result)
             assert(result.contains("installed"))
+        }
+        "the plugin should correctly create the coverage file" {
+            val project = configuredPlugin(
+                """
+                useVirtualEnv.set(false)
+                """.trimIndent()
+            )
+            val file = File(PluginTests::class.java.getResource("/python").toURI())
+            project.moveFolder(file)
+            val result = project.runGradle("doCoverage", "--stacktrace", "--debug")
+            println(result)
+            println(project.root)
+            assert(Files.exists(File("${project.root}/.coverage").toPath()))
         }
     }
 ) {
@@ -58,7 +72,7 @@ class PluginTests : StringSpec(
             }
         }
 
-        fun TemporaryFolder.runCommand(command: String, wait: Long = 10) = runCommand(
+        fun TemporaryFolder.runCommand(command: String, wait: Long = 30) = runCommand(
             *command.split(" ").toTypedArray(),
             wait = wait,
         )
