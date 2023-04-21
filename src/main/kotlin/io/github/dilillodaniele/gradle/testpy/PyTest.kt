@@ -89,6 +89,7 @@ open class PyTest : Plugin<Project> {
             tasks.register<Exec>("doCoverage") {
                 dependsOn("installCoverage")
                 val path = projectPath + "/" + extension.testSrc.get()
+                project.logger.warn("Project path: $path")
                 val command = if (extension.useVirtualEnv.get())
                     "${pythonFolder()}/coverage run -m unittest discover -s $path"
                 else

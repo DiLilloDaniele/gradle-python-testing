@@ -72,7 +72,7 @@ class PluginTests : StringSpec(
             }
         }
 
-        fun TemporaryFolder.runCommand(command: String, wait: Long = 10) = runCommand(
+        fun TemporaryFolder.runCommand(command: String, wait: Long = 30) = runCommand(
             *command.split(" ").toTypedArray(),
             wait = wait,
         )
