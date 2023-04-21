@@ -24,7 +24,7 @@ class PluginTests : StringSpec(
             assert(result.contains("OK"))
         }
         "the plugin should correctly install coverage globally if venv's not used" {
-            val project = configuredPlugin()
+            val project = configuredPlugin("useVirtualEnv.set(false)")
             val result = project.runGradle("installCoverageGlobally", "--stacktrace")
             println(result)
             assert(result.contains("installed"))
