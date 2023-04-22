@@ -122,6 +122,20 @@ open class PyTest : Plugin<Project> {
                         project.logger.warn(COV_OK)
                 }
             }
+
+            tasks.register<Exec>("performTests") {
+                dependsOn("checkCoverage")
+                val command = if (extension.useVirtualEnv.get())
+                    "${pythonFolder()}/python -m unittest discover -s ${extension.testSrc.get()}"
+                else
+                    "python -m unittest discover -s ${extension.testSrc.get()}"
+                commandLine(command.split(" ").toList())
+                standardOutput = ByteArrayOutputStream()
+                doLast {
+                    val result = standardOutput.toString()
+                    project.logger.warn("$result")
+                }
+            }
         }
     }
 
