@@ -2,11 +2,15 @@ plugins {
     `java-gradle-plugin`
     kotlin("jvm") version "1.5.31"
     java
-    alias(libs.plugins.dokka)
-    id("com.gradle.plugin-publish") version "1.0.0"
-    id("org.danilopianini.gradle-kotlin-qa") version "0.27.0"
     `maven-publish`
     signing
+    alias(libs.plugins.dokka)
+    alias(libs.plugins.gitSemVer)
+    alias(libs.plugins.publishOnCentral)
+    alias(libs.plugins.gradle.plugin.publish)
+    alias(libs.plugins.kotlin.qa)
+    alias(libs.plugins.taskTree)
+    alias(libs.plugins.multiJvmTesting)
 }
 
 group = "org.danieledilillo"
@@ -26,6 +30,11 @@ dependencies {
 
     testImplementation(gradleTestKit())
     testImplementation(libs.bundles.kotlin.testing)
+}
+
+gitSemVer {
+    maxVersionLength.set(20)
+    buildMetadataSeparator.set("-")
 }
 
 tasks.getByName<Test>("test") {
@@ -90,14 +99,8 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
     }
 }
 
-val javadocJar by tasks.registering(Jar::class) {
-    from(tasks.dokkaJavadoc.get().outputDirectory)
-    archiveClassifier.set("javadoc")
-}
-
-val sourceJar by tasks.registering(Jar::class) {
-    from(sourceSets.named("main").get().allSource)
-    archiveClassifier.set("sources")
+multiJvm {
+    maximumSupportedJvmVersion.set(latestJavaSupportedByGradle)
 }
 
 /*
