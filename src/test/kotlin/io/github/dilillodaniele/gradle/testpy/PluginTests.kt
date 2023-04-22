@@ -7,6 +7,9 @@ import org.gradle.testkit.runner.GradleRunner
 import java.io.File
 import java.util.concurrent.TimeUnit
 
+/**
+ * Class that encapsulates tests for the Python Testing Plugin.
+ */
 class PluginTests : StringSpec(
     {
         "the plugin task that performs detailed tests should work correctly" {
@@ -32,6 +35,10 @@ class PluginTests : StringSpec(
     }
 ) {
     companion object {
+
+        /**
+         * Name for the virtual environment to use.
+         */
         const val virtualEnvFolder: String = "env"
 
         fun folder(closure: TemporaryFolder.() -> Unit) = TemporaryFolder().apply {
