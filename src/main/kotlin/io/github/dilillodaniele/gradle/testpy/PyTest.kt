@@ -7,6 +7,7 @@ import org.gradle.api.tasks.Exec
 import org.gradle.kotlin.dsl.register
 import java.io.ByteArrayOutputStream
 import java.io.File
+import java.math.BigDecimal
 import java.util.*
 
 /**
@@ -70,7 +71,7 @@ open class PyTest : Plugin<Project> {
                     val result = standardOutput.toString()
                     val installed = result.contains("coverage")
                     project.logger.warn("coverage is installed: $installed")
-                    if (!installed && !extension.useVirtualEnv.get()) {
+                    if (!installed) {
                         val output = project.runCommand("${pythonFolder()}/python", "-m", "pip", "install", "coverage")
                         project.logger.warn("$output")
                         project.logger.warn("----------------------")
@@ -102,10 +103,34 @@ open class PyTest : Plugin<Project> {
                     project.logger.warn("the result value is: $result")
                 }
             }
+
+            tasks.register<Exec>("checkCoverage") {
+                dependsOn("doCoverage")
+                val command = if (extension.useVirtualEnv.get())
+                    "${pythonFolder()}/python -m coverage json --omit=src/test/*"
+                else
+                    "python -m coverage json --omit=src/test/*"
+                commandLine(command.split(" ").toList())
+                doLast {
+                    val file = File("$projectPath/coverage.json")
+                    val json = groovy.json.JsonSlurper().parseText(file.readText()) as Map<*, *>
+                    val totals: Map<*, *>? = json["totals"] as Map<*, *>?
+                    val value = totals?.get("percent_covered") as BigDecimal
+                    if (value <= BigDecimal(extension.minCoveragePercValue.get()))
+                        error("Coverage percentage is lower than the threshold")
+                    else
+                        project.logger.warn(COV_OK)
+                }
+            }
         }
     }
 
     companion object {
+
+        /**
+         * Coverage output value.
+         */
+        const val COV_OK = "coverage percentage ok"
 
         enum class OS {
             WINDOWS, LINUX, MAC
