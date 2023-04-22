@@ -38,10 +38,22 @@ class PluginTests : StringSpec(
             )
             val file = File(PluginTests::class.java.getResource("/python").toURI())
             project.moveFolder(file)
-            val result = project.runGradle("doCoverage", "--stacktrace", "--debug")
-            println(result)
-            println(project.root)
+            project.runGradle("doCoverage", "--stacktrace", "--debug")
             assert(Files.exists(File("${project.root}/.coverage").toPath()))
+        }
+        "the check coverage task should work correctly" {
+            val project = configuredPlugin(
+                """
+                useVirtualEnv.set(true)
+                virtualEnvFolder.set("$virtualEnvFolder")
+                """.trimIndent()
+            )
+            val file = File(PluginTests::class.java.getResource("/python").toURI())
+            project.virtualEnvStartup()
+            project.moveFolder(file)
+            println(project.root)
+            val result = project.runGradle("checkCoverage", "--stacktrace")
+            assert(result.contains(PyTest.COV_OK))
         }
     }
 ) {
