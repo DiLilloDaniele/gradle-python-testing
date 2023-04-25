@@ -78,6 +78,8 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
       - name: Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN}}
         run: |
           npm install
           npx semantic-release
