@@ -17,19 +17,22 @@ group = "org.danieledilillo"
 
 repositories {
     mavenCentral()
-    mavenLocal()
 }
 
 dependencies {
     implementation(kotlin("stdlib"))
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.6.0")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
-    implementation(gradleApi())
-    implementation(gradleKotlinDsl())
+    api(gradleApi())
+    api(gradleKotlinDsl())
     implementation("commons-io:commons-io:2.11.0")
 
     testImplementation(gradleTestKit())
     testImplementation(libs.bundles.kotlin.testing)
+}
+
+tasks.getByName<Test>("test") {
+    useJUnitPlatform()
 }
 
 gitSemVer {
@@ -37,31 +40,12 @@ gitSemVer {
     buildMetadataSeparator.set("-")
 }
 
-tasks.getByName<Test>("test") {
-    useJUnitPlatform()
-}
-
-gradlePlugin {
-    plugins {
-        create("") { // One entry per plugin
-            project.logger.warn("${project.group} - ${project.name}")
-            id = "${project.group}.${project.name}"
-            displayName = "Python Testing Plugin"
-            description = "Plugin developed aiming at the automation " +
-                "of the testing process in a Python project. This plugin includes " +
-                "the possibility to specify the src and test folders of the project " +
-                "and perform tests and coverage using all the Python libraries (unittest and coverage modules)." +
-                " It is also supported to use Phython virtual environments."
-            implementationClass = "io.github.dilillodaniele.gradle.testpy.PyTest"
-        }
-    }
-}
-
-pluginBundle { // These settings are set for the whole plugin bundle
-    website = ""
-    vcsUrl = ""
-    tags = listOf("python", "test", "coverage", "buildpython")
-}
+val name = "Python Testing Plugin"
+val description = "Plugin developed aiming at the automation " +
+        "of the testing process in a Python project. This plugin includes " +
+        "the possibility to specify the src and test folders of the project " +
+        "and perform tests and coverage using all the Python libraries (unittest and coverage modules)." +
+        " It is also supported to use Phython virtual environments."
 
 java {
     toolchain {
@@ -88,7 +72,7 @@ val testWithJVM18 by tasks.registering(Test::class) { // Also works with JavaExe
         }
     )
 }
-// You can pick JVM's not yet supported by Gradle!
+
 tasks.check {
     dependsOn(testWithJVM18)
 }
@@ -103,7 +87,7 @@ multiJvm {
     maximumSupportedJvmVersion.set(latestJavaSupportedByGradle)
 }
 
-/*
+
 publishing {
     repositories {
         maven {
@@ -116,15 +100,15 @@ publishing {
             }
         }
         publications {
-            val pyTest by creating(MavenPublication::class) {
+            val testPython by creating(MavenPublication::class) {
                 from(components["java"])
                 // If the gradle-publish-plugins plugin is applied, these are pre-configured
                 // artifact(javadocJar)
                 // artifact(sourceJar)
                 pom {
-                    name.set("Greetings plugin")
-                    description.set("A test plugin")
-                    url.set("???")
+                    name.set(name)
+                    description.set(description)
+                    url.set("https://github.com/DiLilloDaniele/gradle-python-testing")
                     licenses {
                         license {
                             name.set("MIT")
@@ -136,17 +120,15 @@ publishing {
                         }
                     }
                     scm {
-                        url.set("git@github.com:DanySK/lss-deleted-soon.git")
-                        connection.set("git@github.com:DanySK/lss-deleted-soon.git")
+                        url.set("git@github.com:DiLilloDaniele/gradle-python-testing.git")
+                        connection.set("git@github.com:DiLilloDaniele/gradle-python-testing.git")
                     }
                 }
             }
-            signing { sign(pyTest) }
         }
     }
 }
-*/
-/*
+
 if (System.getenv("CI") == "true") {
     signing {
         val signingKey: String? by project
@@ -159,4 +141,20 @@ if (System.getenv("CI") == "true") {
         sign(configurations.archives.get())
     }
 }
-*/
+
+gradlePlugin {
+    plugins {
+        create("") { // One entry per plugin
+            id = "${project.group}.${project.name}"
+            displayName = name
+            description = description
+            implementationClass = "io.github.dilillodaniele.gradle.testpy.PyTest"
+        }
+    }
+}
+
+pluginBundle { // These settings are set for the whole plugin bundle
+    website = ""
+    vcsUrl = ""
+    tags = listOf("python", "test", "coverage", "buildpython")
+}
