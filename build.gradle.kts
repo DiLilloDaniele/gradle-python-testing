@@ -102,9 +102,6 @@ publishing {
         publications {
             val testPython by creating(MavenPublication::class) {
                 from(components["java"])
-                // If the gradle-publish-plugins plugin is applied, these are pre-configured
-                // artifact(javadocJar)
-                // artifact(sourceJar)
                 pom {
                     name.set(name)
                     description.set(description)
@@ -153,7 +150,7 @@ gradlePlugin {
     }
 }
 
-pluginBundle { // These settings are set for the whole plugin bundle
+pluginBundle {
     website = ""
     vcsUrl = ""
     tags = listOf("python", "test", "coverage", "buildpython")
