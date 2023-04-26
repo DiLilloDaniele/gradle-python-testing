@@ -17,6 +17,7 @@ group = "org.danieledilillo"
 
 repositories {
     mavenCentral()
+    gradlePluginPortal()
 }
 
 dependencies {
@@ -42,10 +43,10 @@ gitSemVer {
 
 val name = "Python Testing Plugin"
 val description = "Plugin developed aiming at the automation " +
-        "of the testing process in a Python project. This plugin includes " +
-        "the possibility to specify the src and test folders of the project " +
-        "and perform tests and coverage using all the Python libraries (unittest and coverage modules)." +
-        " It is also supported to use Phython virtual environments."
+    "of the testing process in a Python project. This plugin includes " +
+    "the possibility to specify the src and test folders of the project " +
+    "and perform tests and coverage using all the Python libraries (unittest and coverage modules)." +
+    " It is also supported to use Phython virtual environments."
 
 java {
     toolchain {
@@ -86,7 +87,6 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
 multiJvm {
     maximumSupportedJvmVersion.set(latestJavaSupportedByGradle)
 }
-
 
 publishing {
     repositories {
