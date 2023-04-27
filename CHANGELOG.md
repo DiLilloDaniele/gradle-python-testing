@@ -4,6 +4,25 @@
 ### Features
 
 * added new publication feature ([1306254](https://github.com/DiLilloDaniele/gradle-python-testing/commit/130625440d425a789e8458a54f6c7fdb9124add4))
+* **build:** added maven publication config ([dab5454](https://github.com/DiLilloDaniele/gradle-python-testing/commit/dab5454b0d306aa82f6bdcb261bafadff900d481))
+
+
+### Bug Fixes
+
+* **build:** fixed release/publish config file ([7c1df84](https://github.com/DiLilloDaniele/gradle-python-testing/commit/7c1df8481bcf43cc29c219195ca2822c935a6429))
+* **ci:** added env variables for [secure]s ([4025d9b](https://github.com/DiLilloDaniele/gradle-python-testing/commit/4025d9b8da29c8c3a19b3d8d3cafe520b6b573cd))
+
+
+### General maintenance
+
+* **release:** 1.1.0 [skip ci] ([133607f](https://github.com/DiLilloDaniele/gradle-python-testing/commit/133607f7499fc9fc7f0ae72e5716409ca31b2f95))
+
+## [1.1.0](https://github.com/DiLilloDaniele/gradle-python-testing/compare/1.0.0...1.1.0) (2023-04-27)
+
+
+### Features
+
+* added new publication feature ([1306254](https://github.com/DiLilloDaniele/gradle-python-testing/commit/130625440d425a789e8458a54f6c7fdb9124add4))
 
 
 ### Bug Fixes
