@@ -103,8 +103,8 @@ publishing {
             val testPython by creating(MavenPublication::class) {
                 from(components["java"])
                 pom {
-                    name.set(name)
-                    description.set(description)
+                    name.set(infoName)
+                    description.set(infoDescription)
                     url.set("https://github.com/DiLilloDaniele/gradle-python-testing")
                     licenses {
                         license {
