@@ -150,7 +150,7 @@ gradlePlugin {
 }
 
 pluginBundle { // These settings are set for the whole plugin bundle
-    website = ""
-    vcsUrl = ""
+    website = "https://github.com/DiLilloDaniele/gradle-python-testing"
+    vcsUrl = "https://github.com/DiLilloDaniele/gradle-python-testing.git"
     tags = listOf("python", "test", "coverage", "buildpython")
 }
