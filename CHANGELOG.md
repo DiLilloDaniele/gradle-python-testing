@@ -1,3 +1,10 @@
+## [1.2.0](https://github.com/DiLilloDaniele/gradle-python-testing/compare/1.1.0...1.2.0) (2023-04-28)
+
+
+### Features
+
+* added group id for publication ([c6e2c9d](https://github.com/DiLilloDaniele/gradle-python-testing/commit/c6e2c9d323acdfede2cfd44daad4ed9c621666e0))
+
 ## [1.1.0](https://github.com/DiLilloDaniele/gradle-python-testing/compare/1.0.0...1.1.0) (2023-04-27)
 
 
