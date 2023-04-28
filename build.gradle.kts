@@ -1,6 +1,6 @@
 plugins {
     `java-gradle-plugin`
-    kotlin("jvm") version "1.5.31"
+    alias(libs.plugins.kotlin.jvm)
     java
     `maven-publish`
     signing
@@ -17,14 +17,15 @@ group = "io.github.DiLilloDaniele"
 
 repositories {
     mavenCentral()
+    gradlePluginPortal()
 }
 
 dependencies {
-    implementation(kotlin("stdlib"))
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.6.0")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
     api(gradleApi())
     api(gradleKotlinDsl())
+    implementation(kotlin("stdlib-jdk8"))
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.6.0")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
     implementation("commons-io:commons-io:2.11.0")
 
     testImplementation(gradleTestKit())
@@ -40,8 +41,8 @@ gitSemVer {
     buildMetadataSeparator.set("-")
 }
 
-val name = "Python Testing Plugin"
-val description = "Plugin developed aiming at the automation " +
+val infoName = "Python Testing Plugin"
+val infoDescription = "Plugin developed aiming at the automation " +
     "of the testing process in a Python project. This plugin includes " +
     "the possibility to specify the src and test folders of the project " +
     "and perform tests and coverage using all the Python libraries (unittest and coverage modules)." +
@@ -140,16 +141,16 @@ if (System.getenv("CI") == "true") {
 
 gradlePlugin {
     plugins {
-        create("") { // One entry per plugin
+        create("PyTest") { // One entry per plugin
             id = "${project.group}.${project.name}"
-            displayName = name
-            description = description
+            displayName = infoName
+            description = infoDescription
             implementationClass = "io.github.dilillodaniele.gradle.testpy.PyTest"
         }
     }
 }
 
-pluginBundle { // These settings are set for the whole plugin bundle
+pluginBundle {
     website = "https://github.com/DiLilloDaniele/gradle-python-testing"
     vcsUrl = "https://github.com/DiLilloDaniele/gradle-python-testing.git"
     tags = listOf("python", "test", "coverage", "buildpython")

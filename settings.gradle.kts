@@ -3,7 +3,6 @@ plugins {
     id("org.danilopianini.gradle-pre-commit-git-hooks") version "1.1.6"
 }
 
-enableFeaturePreview("VERSION_CATALOGS")
 rootProject.name = "gradle-python-testing"
 
 gradleEnterprise {
