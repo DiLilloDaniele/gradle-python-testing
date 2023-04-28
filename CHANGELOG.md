@@ -1,3 +1,10 @@
+## [1.4.0](https://github.com/DiLilloDaniele/gradle-python-testing/compare/1.3.0...1.4.0) (2023-04-28)
+
+
+### Features
+
+* name and description for publication ([7cb51fa](https://github.com/DiLilloDaniele/gradle-python-testing/commit/7cb51fad19f513ee3c32c6329af7bcfd258fd871))
+
 ## [1.3.0](https://github.com/DiLilloDaniele/gradle-python-testing/compare/1.2.0...1.3.0) (2023-04-28)
 
 
