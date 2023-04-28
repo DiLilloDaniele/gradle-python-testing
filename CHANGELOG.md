@@ -1,3 +1,10 @@
+## [1.3.0](https://github.com/DiLilloDaniele/gradle-python-testing/compare/1.2.0...1.3.0) (2023-04-28)
+
+
+### Features
+
+* added vcs and website urls ([f0d5c37](https://github.com/DiLilloDaniele/gradle-python-testing/commit/f0d5c37363e88871f4f3e9befdc3b6dc3c640de7))
+
 ## [1.2.0](https://github.com/DiLilloDaniele/gradle-python-testing/compare/1.1.0...1.2.0) (2023-04-28)
 
 
