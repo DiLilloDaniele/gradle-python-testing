@@ -1,3 +1,10 @@
+## [1.4.1](https://github.com/DiLilloDaniele/gradle-python-testing/compare/1.4.0...1.4.1) (2023-04-28)
+
+
+### Bug Fixes
+
+* **build:** fixed info name and description ([bf4cd68](https://github.com/DiLilloDaniele/gradle-python-testing/commit/bf4cd68c11b348375c8c5ef1401a1d00a970d0e5))
+
 ## [1.4.0](https://github.com/DiLilloDaniele/gradle-python-testing/compare/1.3.0...1.4.0) (2023-04-28)
 
 
