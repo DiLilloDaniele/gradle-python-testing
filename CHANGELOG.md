@@ -1,3 +1,10 @@
+## [1.4.2](https://github.com/DiLilloDaniele/gradle-python-testing/compare/1.4.1...1.4.2) (2023-05-12)
+
+
+### Documentation
+
+* modified README.md ([cdab244](https://github.com/DiLilloDaniele/gradle-python-testing/commit/cdab24421ed1ec55238b4ed3048d78e73da2bda3))
+
 ## [1.4.1](https://github.com/DiLilloDaniele/gradle-python-testing/compare/1.4.0...1.4.1) (2023-04-28)
 
 
