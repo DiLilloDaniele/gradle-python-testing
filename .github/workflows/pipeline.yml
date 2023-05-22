@@ -2,6 +2,10 @@ name: CI/CD PyTestPlugin
 
 on:
   push:
+    paths-ignore:
+      - '**/README.md'
+    branches:
+      - main
   workflow_dispatch:
 
 jobs:
