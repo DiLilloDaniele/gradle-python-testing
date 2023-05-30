@@ -1,3 +1,15 @@
+## [1.4.4](https://github.com/DiLilloDaniele/gradle-python-testing/compare/1.4.3...1.4.4) (2023-05-30)
+
+
+### Bug Fixes
+
+* fixed path syntax to package form in coverage task ([0d2b6a8](https://github.com/DiLilloDaniele/gradle-python-testing/commit/0d2b6a87581279b50287613582c6535fe7347983))
+
+
+### General maintenance
+
+* merge changelog ([0c2ec4a](https://github.com/DiLilloDaniele/gradle-python-testing/commit/0c2ec4af75ecd1cbef71a1c30655c6a9d338b162))
+
 ## [1.4.3](https://github.com/DiLilloDaniele/gradle-python-testing/compare/1.4.2...1.4.3) (2023-05-30)
 
 
