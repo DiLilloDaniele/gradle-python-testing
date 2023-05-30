@@ -125,8 +125,9 @@ open class PyTest : Plugin<Project> {
 
             tasks.register<Exec>("performTests") {
                 dependsOn("checkCoverage")
+                val srcPackage = extension.testSrc.get().replace("/", ".")
                 val command = if (extension.useVirtualEnv.get())
-                    "${pythonFolder()}/python -m unittest discover -s ${extension.testSrc.get()}"
+                    "${pythonFolder()}/python -m unittest discover -s $srcPackage"
                 else
                     "python -m unittest discover -s ${extension.testSrc.get()}"
                 commandLine(command.split(" ").toList())
