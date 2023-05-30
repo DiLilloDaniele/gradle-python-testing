@@ -1,3 +1,21 @@
+## [1.4.3](https://github.com/DiLilloDaniele/gradle-python-testing/compare/1.4.2...1.4.3) (2023-05-30)
+
+
+### Bug Fixes
+
+* fixed path syntax in package form ([4298291](https://github.com/DiLilloDaniele/gradle-python-testing/commit/42982917d6c094f4e092e6608fdff07acdc216e8))
+
+
+### Build and continuous integration
+
+* added new push configuration ([3c8144a](https://github.com/DiLilloDaniele/gradle-python-testing/commit/3c8144ab89e2fc85d394f55f6a8a73f2a3d72b19))
+* update renovate to work only monthly ([0368f26](https://github.com/DiLilloDaniele/gradle-python-testing/commit/0368f26857e57a6a163d6d12e6e7a78bdbb26081))
+
+
+### General maintenance
+
+* updated README file ([2e33d0e](https://github.com/DiLilloDaniele/gradle-python-testing/commit/2e33d0e9e345b99d26f1747c69d20ac6faa869f8))
+
 ## [1.4.2](https://github.com/DiLilloDaniele/gradle-python-testing/compare/1.4.1...1.4.2) (2023-05-12)
 
 
