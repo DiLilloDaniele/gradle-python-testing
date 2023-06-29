@@ -1,4 +1,14 @@
 # gradle-python-testing
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=DiLilloDaniele_gradle-python-testing&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=DiLilloDaniele_gradle-python-testing)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=DiLilloDaniele_gradle-python-testing&metric=bugs)](https://sonarcloud.io/summary/new_code?id=DiLilloDaniele_gradle-python-testing)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=DiLilloDaniele_gradle-python-testing&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=DiLilloDaniele_gradle-python-testing)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=DiLilloDaniele_gradle-python-testing&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=DiLilloDaniele_gradle-python-testing)
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=DiLilloDaniele_gradle-python-testing&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=DiLilloDaniele_gradle-python-testing)
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=DiLilloDaniele_gradle-python-testing&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=DiLilloDaniele_gradle-python-testing)
+[![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=DiLilloDaniele_gradle-python-testing&metric=sqale_index)](https://sonarcloud.io/summary/new_code?id=DiLilloDaniele_gradle-python-testing)
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=DiLilloDaniele_gradle-python-testing&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=DiLilloDaniele_gradle-python-testing)
+[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=DiLilloDaniele_gradle-python-testing&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=DiLilloDaniele_gradle-python-testing)
+
 Gradle Plugin that simplify the testing process of a Python project.
 ```bash
 id("io.github.DiLilloDaniele.gradle-python-testing") version "1.4.1"
