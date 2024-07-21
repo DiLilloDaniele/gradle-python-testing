@@ -1,6 +1,6 @@
 [versions]
 kotest = "5.5.1"
-kotlin = "1.7.20"
+kotlin = "1.9.25"
 gitSemVer = "1.1.5"
 dokka = "1.8.10"
 
